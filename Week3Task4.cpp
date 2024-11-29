@@ -20,134 +20,112 @@
 #include<string>
 #include<map>
 using namespace std;
+
 class Theme{
-    public:
-    virtual void setDisplyTheme() = 0;
-};
-class SportTheme : public Theme{
     string backGroundColor;
     string fontColor;
     int fontSize;
     string iconStyle;
     public:
-    SportTheme(){}
-    void setDisplayTheme(string backGroundColor,string fontColor,int fontSize,string iconStyle){
+    Theme(){}
+    void setThemeDetails(string backGroundColor,string fontColor,int fontSize,string iconStyle){
         this->backGroundColor = backGroundColor;
         this->fontColor = fontColor;
         this->fontSize = fontSize;
         this->iconStyle = iconStyle;
     }
-    void setFontColor(string fontColor){
-        this->fontColor = fontColor;
-
-    }
-    void setBackGroundColor(string backGroundColor){
-        this->backGroundColor = backGroundColor;
-
-    }
-    void setFontSize(int fontSize){
-        this->fontSize = fontSize;
-
-    }
-    void setIconStyle(string iconStyle){
-        this->iconStyle = iconStyle;
-    }
-
     string getThemeDetails(){
-        return  " BackGround Color :" + this->backGroundColor + " Font Color : " + this->fontColor + " Font Size : "+to_string(this->fontSize) + " Icon Style : " + this->iconStyle ;
+        return  "BackGroundColor->" + this->backGroundColor + 
+        ", FontColor-> " + this->fontColor + 
+        ", FontSize->"+to_string(this->fontSize) + 
+        ", IconStyle->" + this->iconStyle ;
     }
         
+};
+class ThemeStore{
+    map<int,pair<string,Theme>> themeMap;
+    Theme theme;
+    public:
+    ThemeStore(){
+        theme.setThemeDetails("Blue","Balck",24,"Round");
+        themeMap[1] = {"EcoTheme",theme};
+        theme.setThemeDetails("Balck","Red",26,"Ovel");
+        themeMap[2] = {"Sport Theme",theme};
+        theme.setThemeDetails("White","Blue",20,"Square");
+        themeMap[3] ={"Classic Theme",theme};
+    }
+    void getTheme(int i){
+        Theme theme;
+        string themeName;
+       
+        if(i == 1){
+            themeName = themeMap[1].first;
+            theme = themeMap[1].second;
+            cout << themeName << " : " << theme.getThemeDetails() << endl;
+        }
+        else if(i == 2){
+            themeName = themeMap[i].first;
+            theme = themeMap[i].second;
+            cout << themeName << " : " << theme.getThemeDetails() << endl;
+        }
+        else if(i == 3){
+            themeName = themeMap[i].first;
+            theme = themeMap[i].second;
+            cout << themeName << " : " << theme.getThemeDetails() << endl;
+        }
+        else{
+            cout << "Enter valid number" << endl;
+        }
+        
+    }
     
-
-};
-class ClassicTheme : public Theme{
-    string backGroundColor;
-    string fontColor;
-    int fontSize;
-    string iconStyle;
-    public:
-    ClassicTheme(){}
-    void setDisplayTheme(string backGroundColor,string fontColor,int fontSize,string iconStyle){
-        this->backGroundColor = backGroundColor;
-        this->fontColor = fontColor;
-        this->fontSize = fontSize;
-        this->iconStyle = iconStyle;
+    void displayThemes(){
+        for(auto it : themeMap){
+            cout << it.second.first << ": " << it.second.second.getThemeDetails() << endl;
+        }
     }
-    void setFontColor(string fontColor){
-        this->fontColor = fontColor;
-
-    }
-    void setBackGroundColor(string backGroundColor){
-        this->backGroundColor = backGroundColor;
-
-    }
-    void setFontSize(int fontSize){
-        this->fontSize = fontSize;
-
-    }
-    void setIconStyle(string iconStyle){
-        this->iconStyle = iconStyle;
-    }
-
-    string getThemeDetails(){
-        return  " BackGround Color :" + this->backGroundColor + " Font Color : " + this->fontColor + " Font Size : "+to_string(this->fontSize) + " Icon Style : " + this->iconStyle ;
-    }
-};
-class EcoTheme : public Theme{
-    string backGroundColor;
-    string fontColor;
-    int fontSize;
-    string iconStyle;
-    public:
-    EcoTheme(){}
-    void setDisplayTheme(string backGroundColor,string fontColor,int fontSize,string iconStyle){
-        this->backGroundColor = backGroundColor;
-        this->fontColor = fontColor;
-        this->fontSize = fontSize;
-        this->iconStyle = iconStyle;
-    }
-    void setFontColor(string fontColor){
-        this->fontColor = fontColor;
-
-    }
-    void setBackGroundColor(string backGroundColor){
-        this->backGroundColor = backGroundColor;
-
-    }
-    void setFontSize(int fontSize){
-        this->fontSize = fontSize;
-
-    }
-    void setIconStyle(string iconStyle){
-        this->iconStyle = iconStyle;
-    }
-
-    string getThemeDetails(){
-        return  " BackGround Color :" + this->backGroundColor + " Font Color : " + this->fontColor + " Font Size : "+to_string(this->fontSize) + " Icon Style : " + this->iconStyle ;
-    }
+        
 };
 
-class ThemeSelector{
-    public:
-    ThemeSelector *themeSelector;
-    ThemeSelector(ThemeSelector *themeSelector){
-        this->themeSelector = themeSelector;
+
+void client(){
+    while(true){
+        int num;
+        cout << "Enter a number to selectTheme : \n 1 : EcoTheme \n 2 : Classic Theme \n 3 : SportTheme \n 4 : Show available Themes \n 5: Exit" << endl;
+        cin >>num;
+        ThemeStore themeStore; 
+        if(num == 1){
+            themeStore.getTheme(num);
+            cout << endl;
+        }
+        else if(num == 2){
+            
+             themeStore.getTheme(num);
+             cout << endl;
+        }
+        else if(num == 3){
+            
+            themeStore.getTheme(num);
+            cout << endl;
+        }
+        else if(num == 4){
+            cout << "current themes are :\n" << endl;
+            themeStore.displayThemes();
+            cout << endl;
+            //cout << "enter number to switch the theme" << endl;
+        }
+        else if(num == 5){
+            break;
+            //cout << "please select the appropriate Number " << endl;
+        }
+        
     }
-};
+    
+}
 
 int main(){
-    int num;
-    cout << "Enter \n 1 : EcoTheme \n 2 : Classic Theme \n 3 : SportTheme " << endl;
-    cin >>num;
-    // Theme *selectTheme;
-    // if(theme == "EcoTheme"){
-    //     Theme *selectTheme = new EcoTheme();
-    // }
-    // else if(theme == "sportsTheme"){
-    //     Theme *selectTheme = new EcoTheme();
-    // }
-    // else if(theme == "classicTheme")
-
+    map<int,Theme> mapTheme;
+    client();
     return 0;
 }
 
