@@ -1,0 +1,125 @@
+#include <iostream>
+#include<string>
+
+using namespace std;
+
+class CruiseControl{
+    int speed;
+    string cruiseStatus = "deactivate";
+    int originalSpeed;
+public:
+    // Set Speed: Allow the user to set a target cruise speed (in km/h).
+    void setSpeed()
+    {
+        int s;
+        cout << "enter speed" << endl;
+        cin >> s;
+        speed = s;
+        originalSpeed = s;
+
+    }
+
+    // get cruise status
+    string getCruiseStatus()
+    {
+        return cruiseStatus;
+    }
+
+    // get the current speed
+    int currentSpeed()
+    {
+        return speed;
+    }
+
+    // Adjust Speed: Enable the user to increase or decrease the set speed incrementally (e.g., by 5 km/h steps).
+    void adjustSpeed()
+    {
+        int num;
+        cout << "Enter 1 : to decrease speed by 5km or 2 to increase speed by 5km"<<endl;
+        cin >> num;
+        if( num == 1)
+        {
+            speed -= 5;
+        }
+        else if(num == 2)
+        {
+            speed += 5;
+        }
+        else{
+            cout << "please enter 1 or 2" << endl;
+        }
+        if(speed - originalSpeed >= 20 || originalSpeed - speed >= 20){
+            cruiseStatus = "deactive";
+            cout << "adjusted speed beyound the limit cruise Control is deactivated" << endl;
+        }
+        
+    }
+
+    // activate cruise manually
+    void activateCruiseControl(){
+        cruiseStatus = "Activated";
+        int s;
+        cout << "Enter speed :" << endl;
+        cin >> s;
+        speed = s;
+        originalSpeed = s;
+    }
+
+    // Deactivate Cruise Control:
+    // Automatically deactivate when brakes are applied.
+    void applyBrack()
+    {
+        cruiseStatus = "Deactivated";
+
+    }
+
+    // deactivate cruise Manullay
+    void deactivateCruiseManually(){
+        cruiseStatus = "DeActivated";
+    }
+
+};
+
+int main()
+{
+    CruiseControl cruiseControl;
+    int option;
+    while(true)
+    {
+    
+        cout << "\nChoose option : \n 1 : Activate cruise control \n 2 : Apply bracks \n "
+                "3 : Set Speed \n 4 : Adjust speed \n 5 : Get cruise status \n "
+                "6 : Current speed \n 7 : Deactivate cruise control manually\n 8 : Exit" << endl;
+        cin >> option;
+        if(option == 1){
+            cruiseControl.activateCruiseControl();
+            cout << "cruise Control Activated with speed "<< cruiseControl.currentSpeed() <<" kmph" << endl;
+        }
+        if(option == 2){
+            cruiseControl.applyBrack();
+            cout << "brackes are applied cruise Control is Deactivated" << endl;
+        }
+        if(option == 3){
+            cruiseControl.setSpeed();
+            cout << "speed set to "+to_string(cruiseControl.currentSpeed())+" kmph"  << endl;
+        }
+        if(option == 4){
+            cruiseControl.adjustSpeed();
+            cout << "speed is adujusted and current speed is " << cruiseControl.currentSpeed() <<" kmph" << endl;
+        }
+        if(option == 5){
+            cout << "cruise status is "<< cruiseControl.getCruiseStatus() << endl;
+        }
+        if(option == 6){
+           
+            cout << "current speed is "<< cruiseControl.currentSpeed() << " kmph"<< endl;
+        }
+        if(option == 7){
+            cruiseControl.deactivateCruiseManually();
+            cout << "cruise Control is Deactivated" << endl;
+        }
+        if(option == 8){
+            break;
+        }
+    }
+}
